@@ -1,0 +1,74 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ make
+    
+    - name: Build project
+      run: make
+    
+    - name: Run tests
+      run: make test
+    
+    - name: Upload binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: shamirs-secret-linux
+        path: shamirs_secret
+
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
+    
+    - name: Build project
+      run: |
+        g++ -std=c++17 -Wall -Wextra -O2 -Iinclude -Isrc -o shamirs_secret.exe src/main.cpp
+    
+    - name: Test basic functionality
+      run: |
+        ./shamirs_secret.exe examples/test1.json
+    
+    - name: Upload binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: shamirs-secret-windows
+        path: shamirs_secret.exe
+
+  build-macos:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build project
+      run: make
+    
+    - name: Run tests
+      run: make test
+    
+    - name: Upload binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: shamirs-secret-macos
+        path: shamirs_secret
