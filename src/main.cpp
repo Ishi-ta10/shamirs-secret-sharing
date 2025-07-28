@@ -3,67 +3,47 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <set>
 #include <algorithm>
-#include <regex>
-#include <cmath>
-#include <chrono>
 #include "json.hpp"
 #include "bigint.hpp"
-#include "shamirs_solver.hpp"
+#include "polynomial_solver.hpp"
 
 using json = nlohmann::json;
 using namespace std;
 
-void printUsage(const string& programName) {
-    cout << "Usage: " << programName << " [input_file.json] [options]\n";
-    cout << "Options:\n";
-    cout << "  -h, --help     Show this help message\n";
-    cout << "  -v, --verbose  Enable verbose output\n";
-    cout << "  -t, --time     Show execution time\n";
-    cout << "\nExample:\n";
-    cout << "  " << programName << " input.json\n";
-    cout << "  " << programName << " examples/test1.json --verbose\n";
-}
-
-int main(int argc, char* argv[]) {
+int main() {
     try {
-        string filename = "input.json";
-        bool verbose = false;
-        bool showTime = false;
-        
-        // Parse command line arguments
-        for (int i = 1; i < argc; i++) {
-            string arg = argv[i];
-            if (arg == "-h" || arg == "--help") {
-                printUsage(argv[0]);
-                return 0;
-            } else if (arg == "-v" || arg == "--verbose") {
-                verbose = true;
-            } else if (arg == "-t" || arg == "--time") {
-                showTime = true;
-            } else if (arg[0] != '-') {
-                filename = arg;
-            }
-        }
-        
-        cout << "🔐 Shamir's Secret Sharing Algorithm" << endl;
-        cout << "====================================" << endl;
-        cout << "Reading from: " << filename << endl;
-        if (verbose) cout << "Verbose mode: ON" << endl;
+        cout << "🔐 Catalog Placements Assignment - Shamir's Secret Sharing" << endl;
+        cout << "==========================================================" << endl;
         cout << endl;
         
-        auto startTime = chrono::high_resolution_clock::now();
+        // Process Test Case 1
+        cout << "📋 Processing Test Case 1..." << endl;
+        cout << "----------------------------" << endl;
         
-        ShamirsSecretSharing solver(verbose);
-        solver.solve(filename);
+        PolynomialSolver solver1;
+        BigInt secret1 = solver1.solve("testcases/testcase1.json");
         
-        auto endTime = chrono::high_resolution_clock::now();
+        cout << "🎯 Test Case 1 Result:" << endl;
+        cout << "   Secret (c): " << secret1.toString() << endl;
+        cout << endl;
         
-        if (showTime) {
-            auto duration = chrono::duration_cast<chrono::milliseconds>(endTime - startTime);
-            cout << "\n⏱️  Execution time: " << duration.count() << " ms" << endl;
-        }
+        // Process Test Case 2
+        cout << "📋 Processing Test Case 2..." << endl;
+        cout << "----------------------------" << endl;
+        
+        PolynomialSolver solver2;
+        BigInt secret2 = solver2.solve("testcases/testcase2.json");
+        
+        cout << "🎯 Test Case 2 Result:" << endl;
+        cout << "   Secret (c): " << secret2.toString() << endl;
+        cout << endl;
+        
+        // Final Output
+        cout << "🏆 FINAL RESULTS" << endl;
+        cout << "================" << endl;
+        cout << "Test Case 1 Secret: " << secret1.toString() << endl;
+        cout << "Test Case 2 Secret: " << secret2.toString() << endl;
         
     } catch (const exception& e) {
         cerr << "❌ Error: " << e.what() << endl;

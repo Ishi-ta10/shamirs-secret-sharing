@@ -1,5 +1,5 @@
 @echo off
-echo 🔨 Building Shamir's Secret Sharing Algorithm...
+echo 🔨 Building Catalog Placements Assignment...
 echo.
 
 REM Check if g++ is available
@@ -12,18 +12,15 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-REM Create build directory if it doesn't exist
-if not exist "build" mkdir build
-
 REM Compile the program
 echo Compiling...
-g++ -std=c++17 -Wall -Wextra -O2 -Iinclude -Isrc -o shamirs_secret.exe src/main.cpp
+g++ -std=c++17 -Wall -Wextra -O2 -Iinclude -Isrc -o catalog_assignment.exe src/main.cpp
 
 if %errorlevel% equ 0 (
     echo ✅ Compilation successful!
     echo.
-    echo 🚀 Running with default input...
-    shamirs_secret.exe examples/input.json
+    echo 🚀 Running assignment...
+    catalog_assignment.exe
 ) else (
     echo ❌ Compilation failed!
     pause
@@ -31,6 +28,4 @@ if %errorlevel% equ 0 (
 )
 
 echo.
-echo 📝 Usage: shamirs_secret.exe [input_file.json] [options]
-echo Options: --verbose, --time, --help
 pause

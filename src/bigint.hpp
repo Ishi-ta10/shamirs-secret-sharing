@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>
 
 class BigInt {
 private:
@@ -39,7 +40,15 @@ public:
             start = 1;
         }
         
+        if (start >= str.length()) {
+            digits.push_back(0);
+            return;
+        }
+        
         for (int i = str.length() - 1; i >= start; i--) {
+            if (str[i] < '0' || str[i] > '9') {
+                throw std::runtime_error("Invalid character in number: " + std::string(1, str[i]));
+            }
             digits.push_back(str[i] - '0');
         }
         

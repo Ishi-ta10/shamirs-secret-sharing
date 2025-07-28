@@ -1,6 +1,6 @@
 # Compiled binaries
-shamirs_secret
-shamirs_secret.exe
+catalog_assignment
+catalog_assignment.exe
 *.exe
 *.out
 *.app
@@ -33,6 +33,7 @@ Thumbs.db
 *~
 *.swp
 *.swo
+output.txt
 
 # Log files
 *.log
@@ -53,7 +54,3 @@ Makefile
 *.dSYM/
 *.pdb
 *.ilk
-
-# Local configuration
-config.local.json
-.env
